@@ -1,45 +1,87 @@
-Advanced Java Servlet Project By Harshit Rajguru 24EGJCS091 from section B
-A dynamic web application built using Java Servlets, JavaServer Pages (JSP), and the Java Database Connectivity (JDBC) API. This project follows the Model-View-Controller (MVC) architecture pattern.
+# 🚀 Advanced Java Programming - Practical Laboratory 
+
+Welcome to my practical laboratory repository for Advanced Java. This repository contains a structured portfolio of implementations covering Enterprise Database Connectivity (JDBC), Distributed Systems (RMI), Desktop Web Architectures (Servlets/Filters), Network Sockets, and architectural design patterns (MVC).
+
 ---
-🛠️ Prerequisites
-Before you begin, ensure you have the following installed on your local machine:
-Java Development Kit (JDK): Version 8 or higher (JDK 11 or 17 recommended).
-Apache Tomcat Server: Version 9.x or 10.x.
-Database Management System: MySQL or Oracle DB.
-Build Tool (Optional): Apache Maven (if your project uses a `pom.xml`).
-Integrated Development Environment (IDE): Eclipse IDE for Enterprise Java Developers or IntelliJ IDEA Ultimate.
----
-🚀 How to Run the Project Locally
-Step 1: Clone or Download the Repository
-Get the project files onto your computer:
-```bash
-git clone https://github.com/your-username/your-repository-name.git
-```
-(Alternatively, click Code > Download ZIP on GitHub and extract the folder).
-Step 2: Set Up the Database
-Open your database management tool (e.g., MySQL Workbench or Command Line).
-Create a new database/schema.
-Locate the SQL script file in this repository (usually under a folder named `db/`, `sql/`, or `assets/`) and run it to set up the necessary tables.
-Important: Open your database connection class (typically `DBConnection.java` or `DBUtil.java`) inside the source code and update the configuration credentials:
-```java
-   private static final String URL = "jdbc:mysql://localhost:3306/your_database_name";
-   private static final String USER = "your_username";
-   private static final String PASSWORD = "your_password";
-   ```
-Step 3: Import into Eclipse / IntelliJ
-For Eclipse IDE:
-Open Eclipse and choose a workspace.
-Go to File > Import... > General > Existing Projects into Workspace (or Maven > Existing Maven Projects if it uses Maven).
-Browse and select the root folder of the extracted project, then click Finish.
-Right-click on the project root -> Properties -> Targeted Runtimes, check the box for your Apache Tomcat version, and click Apply and Close.
-For IntelliJ IDEA:
-Open IntelliJ and click Open.
-Select the root folder of the project.
-Configure a Tomcat Server run/debug configuration by clicking Add Configuration > Tomcat Server > Local, and attach your local Tomcat installation directory.
-Step 4: Run the Application
-Right-click on the project root directory (in Eclipse) or open your run configurations (in IntelliJ).
-Select Run As > Run on Server (Eclipse).
-Select your Tomcat server instance and click Finish.
-The application will compile, deploy to Tomcat, and automatically launch in your default web browser at:
+
+## 📂 Repository Architecture & Module Index
+
+The laboratory workspace is organized into **6 core practical projects**:
+
 ```text
-   http://localhost:8080/your-project-context-path/
+java'Lab/
+├── java_jdbc/            # Module 1: Enterprise Database Connectivity via JDBC
+├── MVC_calc/             # Module 2: Model-View-Controller (MVC) Calculator
+├── RMI/                  # Module 3: Remote Method Invocation Distributed App
+├── ServerClient/         # Module 4: Core TCP/IP Socket Networking Suite
+├── servlet/              # Module 5: Maven-managed Servlets, Listeners & Filters
+└── student registration/ # Module 6: JDBC-backed Student Onboarding System
+```
+
+### 🗂️ Detailed Project Index
+
+| Module | Project Folder Name | Core Focus / Topic | Key Technologies Used |
+| :--- | :--- | :--- | :--- |
+| **01** | `java_jdbc` | Database Transaction Testing | JDBC, MySQL Driver, Java SE |
+| **02** | `MVC_calc` | Architectural Separation of Concerns | MVC Pattern, View/Model/Controller separation |
+| **03** | `RMI` | Distributed Computing & RPC | Remote Objects, RMI Registry, Stubs/Skeletons |
+| **04** | `ServerClient` | Network Socket Communication | TCP Sockets, `ServerSocket`, I/O Streams |
+| **05** | `servlet` | Dynamic Enterprise Web Tier | Java Servlets, `AuthFilter`, `AppListener`, Maven |
+| **06** | `student registration` | Enterprise Data Persistence Application | Database CRUD Operations, UI/Form Persistence |
+
+---
+
+## 🛠️ System Prerequisites & Requirements
+
+To compile, build, and deploy these projects locally, ensure your environment meets the following specifications:
+
+1. **Java Development Kit:** Java SE Development Kit (**JDK 11** or higher recommended).
+2. **Database Engine:** **MySQL Server** running locally on default port `3306`.
+3. **Build Tool:** **Apache Maven** (required explicitly for the `servlet` module).
+4. **Database Drivers:** `mysql-connector-j-26.7.0.jar` (included in project dependencies).
+
+---
+
+## 🚀 Execution & Deployment Guidelines
+
+### 1. Enterprise Servlets Module (`servlet/`)
+This is a standard Maven web application. It features customized request processing interceptors (`AuthFilter`) and lifestyle phase trackers (`AppListener`).
+* **Build Command (Terminal):**
+  ```bash
+  cd servlet
+  mvn clean package
+  ```
+* **Deployment:** Deploy the compiled `servlet-1.0-SNAPSHOT.war` located inside the `target/` folder into your local container runner instance (e.g., **Apache Tomcat**).
+
+### 2. Remote Method Invocation Module (`RMI/`)
+Distributed architecture requiring active system interfaces via an RMI registry engine.
+1. Compile the source codes and start the registry daemon in your console terminal:
+   ```bash
+   rmiregistry
+   ```
+2. In a separate terminal tab, bind the remote object instance server:
+   ```bash
+   java Server
+   ```
+3. Initialize the consumer client framework engine to communicate across boundaries:
+   ```bash
+   java Client
+   ```
+
+### 3. Core Networking Module (`ServerClient/`)
+A classic local loopback client-server environment.
+1. Spin up the server processing host daemon wrapper:
+   ```bash
+   java Server
+   ```
+2. Launch the client connection instance wrapper interface:
+   ```bash
+   java Client
+   ```
+
+### 4. Database Applications (`java_jdbc/` & `student registration/`)
+* **Setup:** Before initial compilation execution, ensure your local MySQL schema matches the application configuration parameters.
+* Ensure the target server runtime path resolves the explicit driver dependency library path located at: `./lib/mysql-connector-j-26.7.0.jar`.
+
+---
+*Portfolio compiled and submitted for lab evaluations by __Harshit Rajguru • Roll Number: 24EGJCS091 • Section-B__*
