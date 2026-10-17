@@ -1,6 +1,0 @@
-com\serverlet\AppListner.class
-com\serverlet\HelloServlet.class
-com\serverlet\Main.class
-com\serverlet\HomeServlet.class
-com\serverlet\LoginServlet.class
-com\serverlet\Authfilter.class
