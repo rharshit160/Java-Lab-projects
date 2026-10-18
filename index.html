@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ShopSphere — Premium Everyday Essentials</title>
+  <meta name="description" content="Shop premium tech gadgets, stylish clothing, and lifestyle accessories at unbeatable prices. Fast shipping and secure checkout.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- 1. Purple Header -->
+  <header class="header">
+    <div class="container header-content">
+      <!-- Logo -->
+      <a href="#" class="logo" id="logoLink">
+        <span class="logo-icon">🌐</span> Shop<span class="logo-accent">Sphere</span>
+      </a>
+
+      <!-- Search Bar with Clear Button -->
+      <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" class="search-bar" placeholder="Search gadgets, apparel, accessories...">
+        <button id="clearSearchBtn" class="clear-search-btn" title="Clear search" aria-label="Clear search">&times;</button>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="nav">
+        <a href="#hero" class="nav-link active">Home</a>
+        <a href="#products" class="nav-link">Products</a>
+        <a href="#about" class="nav-link">Why Us</a>
+        <button id="orderHistoryBtn" class="nav-btn" title="View Past Orders">📋 Orders</button>
+      </nav>
+
+      <!-- Cart Button with Counter Badge -->
+      <button id="cartBtn" class="cart-btn" aria-label="View shopping cart">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-text">Cart</span>
+        <span id="cartCount" class="cart-badge">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- 2. Hero Section -->
+  <section class="hero" id="hero">
+    <div class="container hero-content">
+      <div class="hero-badge">⚡ Special Festive Offer: Up to 40% OFF</div>
+      <h1 class="hero-title">Discover Everyday <span class="highlight-purple">Essentials</span></h1>
+      <p class="hero-subtitle">Premium gadgets, designer clothing, and everyday lifestyle gear curated for modern living.</p>
+      <div class="hero-actions">
+        <a href="#products" class="btn btn-primary hero-btn">Explore Products ↓</a>
+        <a href="#about" class="btn btn-outline hero-btn-secondary">Learn More</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Products Section -->
+  <section class="products-section" id="products">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Our Featured Collection</h2>
+          <p class="section-subtitle">Handpicked top-rated products with verified customer reviews</p>
+        </div>
+        <div class="product-status" id="productCountInfo">Showing all products</div>
+      </div>
+
+      <!-- Category Filter Buttons -->
+      <div class="filter-buttons" role="tablist">
+        <button class="filter-btn active" data-category="all" id="filterAll">
+          All Items <span class="badge" id="countAll">6</span>
+        </button>
+        <button class="filter-btn" data-category="tech" id="filterTech">
+          Tech & Gadgets <span class="badge" id="countTech">2</span>
+        </button>
+        <button class="filter-btn" data-category="clothing" id="filterClothing">
+          Clothing <span class="badge" id="countClothing">2</span>
+        </button>
+        <button class="filter-btn" data-category="accessories" id="filterAccessories">
+          Accessories <span class="badge" id="countAccessories">2</span>
+        </button>
+      </div>
+
+      <!-- Product Cards Grid -->
+      <div class="product-grid" id="productGrid" aria-live="polite"></div>
+    </div>
+  </section>
+
+  <!-- 4. Why Shop With Us Section -->
+  <section class="about-section" id="about">
+    <div class="container about-content">
+      <h3 class="about-title">Why Shop With ShopSphere?</h3>
+      <p class="about-desc">We deliver verified quality with trusted customer satisfaction across India.</p>
+      <div class="perks-grid">
+        <div class="perk-card">
+          <div class="perk-icon">🚚</div>
+          <h4>Free Express Shipping</h4>
+          <p>Complimentary delivery on all orders over ₹999 within 2-4 business days.</p>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">🔒</div>
+          <h4>100% Secure Checkout</h4>
+          <p>Bank-grade SSL encryption supporting UPI, Cards, Net Banking & COD.</p>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">⭐</div>
+          <h4>Top Quality Guarantee</h4>
+          <p>4.8/5 average star rating with hassle-free 7-day replacements.</p>
+        </div>
+        <div class="perk-card">
+          <div class="perk-icon">🎧</div>
+          <h4>24/7 Priority Support</h4>
+          <p>Dedicated customer care team ready to assist via chat and phone.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. Cart Slide-out Drawer -->
+  <div id="cartModal" class="modal-overlay cart-drawer-overlay" aria-hidden="true">
+    <div class="cart-box" role="dialog" aria-modal="true" aria-labelledby="cartHeading">
+      <div class="cart-header">
+        <div class="cart-title-wrap">
+          <h3 id="cartHeading">Your Shopping Cart</h3>
+          <span id="cartItemSubtitle" class="cart-subtitle">0 items</span>
+        </div>
+        <button id="closeCart" class="icon-close-btn" aria-label="Close cart">&times;</button>
+      </div>
+
+      <!-- Free Shipping Goal Bar -->
+      <div class="shipping-progress-container">
+        <div class="shipping-progress-label" id="shippingProgressText">Add ₹999 for FREE Shipping</div>
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="shippingProgressBar" style="width: 0%;"></div>
+        </div>
+      </div>
+
+      <!-- Items List -->
+      <div id="cartItems" class="cart-items">
+        <div class="empty-state">
+          <span class="empty-icon">🛍️</span>
+          <p class="empty-msg">Your cart is currently empty.</p>
+          <button class="btn btn-primary btn-sm" id="emptyStateShopBtn">Start Shopping</button>
+        </div>
+      </div>
+
+      <!-- Cart Footer & Checkout -->
+      <div class="cart-footer" id="cartFooter">
+        <!-- Promo Coupon Input -->
+        <div class="coupon-section">
+          <div class="coupon-input-group">
+            <input type="text" id="couponInput" placeholder="Enter promo code (e.g. SPHERE20)" uppercase>
+            <button id="applyCouponBtn" class="btn btn-outline-sm">Apply</button>
+          </div>
+          <div id="couponMessage" class="coupon-msg"></div>
+        </div>
+
+        <div class="price-breakdown">
+          <div class="price-row">
+            <span>Subtotal</span>
+            <span>₹<span id="cartSubtotal">0</span></span>
+          </div>
+          <div class="price-row discount-row" id="discountRow" style="display: none;">
+            <span>Discount (<span id="discountTag">0%</span>)</span>
+            <span class="discount-value">-₹<span id="cartDiscount">0</span></span>
+          </div>
+          <div class="price-row">
+            <span>Delivery Charges</span>
+            <span id="shippingFeeText">₹99</span>
+          </div>
+          <div class="price-row total-row">
+            <strong>Estimated Total:</strong>
+            <strong class="total-amount">₹<span id="cartTotal">0</span></strong>
+          </div>
+        </div>
+
+        <div class="cart-actions">
+          <button id="checkoutBtn" class="btn btn-primary btn-block checkout-btn">
+            Proceed to Checkout ➔
+          </button>
+          <div class="cart-sub-actions">
+            <button id="clearCartBtn" class="btn-text text-danger">Clear Cart</button>
+            <button id="continueShoppingBtn" class="btn-text">Continue Shopping</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. Quick View Product Modal -->
+  <div id="quickViewModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card quick-view-card" role="dialog" aria-modal="true">
+      <button id="closeQuickView" class="icon-close-btn modal-close" aria-label="Close modal">&times;</button>
+      <div class="quick-view-grid">
+        <div class="quick-view-image-wrap">
+          <img id="qvImage" src="" alt="Product preview">
+          <span id="qvCategoryBadge" class="qv-category-pill">Tech</span>
+        </div>
+        <div class="quick-view-details">
+          <div class="qv-rating" id="qvRating">⭐⭐⭐⭐⭐ (4.8)</div>
+          <h2 id="qvTitle" class="qv-title">Product Name</h2>
+          <div class="qv-pricing">
+            <span class="qv-price" id="qvPrice">₹0</span>
+            <span class="qv-original-price" id="qvOriginalPrice">₹0</span>
+            <span class="qv-discount-badge" id="qvDiscount">30% OFF</span>
+          </div>
+          <p class="qv-description" id="qvDesc">Product description will appear here.</p>
+          <div class="qv-features">
+            <div class="qv-feature">✓ Genuine & Sealed Product</div>
+            <div class="qv-feature">✓ 7-Day Replacement Policy</div>
+            <div class="qv-feature">✓ 1-Year Brand Warranty</div>
+          </div>
+          <div class="qv-actions">
+            <button id="qvAddToCartBtn" class="btn btn-primary">Add to Cart 🛒</button>
+            <button id="qvBuyNowBtn" class="btn btn-accent">Buy Now ⚡</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. Checkout Modal (Full Order Details & Payment) -->
+  <div id="checkoutModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card checkout-card" role="dialog" aria-modal="true">
+      <div class="checkout-header">
+        <div>
+          <h3>Complete Your Order</h3>
+          <p class="checkout-subtitle">Enter your shipping details and select payment method</p>
+        </div>
+        <button id="closeCheckout" class="icon-close-btn" aria-label="Close checkout">&times;</button>
+      </div>
+
+      <div class="checkout-body">
+        <form id="checkoutForm" novalidate>
+          <!-- Left Column: Shipping Address -->
+          <div class="checkout-section">
+            <h4 class="checkout-section-title">1. Shipping & Contact Information</h4>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="custName">Full Name *</label>
+                <input type="text" id="custName" placeholder="e.g. Rahul Sharma" required>
+                <span class="field-error" id="errName">Please enter your full name</span>
+              </div>
+              <div class="form-group">
+                <label for="custPhone">Phone Number *</label>
+                <input type="tel" id="custPhone" placeholder="10-digit mobile number" maxlength="10" required>
+                <span class="field-error" id="errPhone">Enter valid 10-digit number</span>
+              </div>
+              <div class="form-group form-span-2">
+                <label for="custEmail">Email Address *</label>
+                <input type="email" id="custEmail" placeholder="rahul@example.com" required>
+                <span class="field-error" id="errEmail">Enter valid email address</span>
+              </div>
+              <div class="form-group form-span-2">
+                <label for="custAddress">Street Address / House No. *</label>
+                <input type="text" id="custAddress" placeholder="Flat 402, Sunshine Heights, MG Road" required>
+                <span class="field-error" id="errAddress">Address is required</span>
+              </div>
+              <div class="form-group">
+                <label for="custCity">City *</label>
+                <input type="text" id="custCity" placeholder="Mumbai" required>
+                <span class="field-error" id="errCity">City is required</span>
+              </div>
+              <div class="form-group">
+                <label for="custPincode">PIN Code *</label>
+                <input type="text" id="custPincode" placeholder="400001" maxlength="6" required>
+                <span class="field-error" id="errPincode">Enter valid 6-digit PIN code</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Payment Method & Summary -->
+          <div class="checkout-section">
+            <h4 class="checkout-section-title">2. Select Payment Method</h4>
+            <div class="payment-options">
+              <label class="payment-option selected">
+                <input type="radio" name="paymentMethod" value="UPI" checked>
+                <div class="payment-option-content">
+                  <div class="payment-option-title">
+                    <span class="payment-icon">📱</span> UPI (Google Pay / PhonePe / Paytm)
+                  </div>
+                  <span class="badge-instant">Instant & Zero Fee</span>
+                </div>
+              </label>
+
+              <div id="upiDetailsBox" class="payment-sub-box">
+                <label for="upiIdInput">Enter your UPI ID / VPA</label>
+                <input type="text" id="upiIdInput" placeholder="username@okhdfcbank" value="user@okhdfcbank">
+                <p class="upi-hint">A payment request link will be simulated on confirmation.</p>
+              </div>
+
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="Card">
+                <div class="payment-option-content">
+                  <div class="payment-option-title">
+                    <span class="payment-icon">💳</span> Credit / Debit Card
+                  </div>
+                </div>
+              </label>
+
+              <div id="cardDetailsBox" class="payment-sub-box" style="display: none;">
+                <input type="text" id="cardNumberInput" placeholder="Card Number (16 digits)" maxlength="19">
+                <div class="card-row">
+                  <input type="text" id="cardExpiryInput" placeholder="MM/YY" maxlength="5">
+                  <input type="password" id="cardCvvInput" placeholder="CVV" maxlength="3">
+                </div>
+              </div>
+
+              <label class="payment-option">
+                <input type="radio" name="paymentMethod" value="COD">
+                <div class="payment-option-content">
+                  <div class="payment-option-title">
+                    <span class="payment-icon">💵</span> Cash on Delivery (COD)
+                  </div>
+                  <span class="badge-cod">Pay cash at doorstep</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Checkout Order Summary Box -->
+            <div class="checkout-summary-box">
+              <h5>Order Summary</h5>
+              <div id="checkoutItemsList" class="checkout-items-list"></div>
+              <div class="checkout-summary-row">
+                <span>Subtotal</span>
+                <span>₹<span id="chkSubtotal">0</span></span>
+              </div>
+              <div class="checkout-summary-row" id="chkDiscountRow" style="display: none;">
+                <span>Discount</span>
+                <span class="discount-value">-₹<span id="chkDiscount">0</span></span>
+              </div>
+              <div class="checkout-summary-row">
+                <span>Shipping</span>
+                <span id="chkShipping">₹0</span>
+              </div>
+              <div class="checkout-summary-row checkout-total-row">
+                <strong>Payable Total:</strong>
+                <strong class="total-amount">₹<span id="chkTotal">0</span></strong>
+              </div>
+            </div>
+
+            <!-- Place Order CTA Button -->
+            <button type="submit" id="placeOrderBtn" class="btn btn-primary btn-block place-order-btn">
+              <span class="btn-text-normal">Confirm & Place Order ➔</span>
+              <span class="btn-spinner" style="display: none;">Processing Order...</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Order Confirmation Screen (Success Modal) -->
+  <div id="orderConfirmationModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card confirmation-card" role="dialog" aria-modal="true">
+      <div class="conf-banner">
+        <div class="conf-check-icon">✓</div>
+        <h2>Order Confirmed!</h2>
+        <p>Thank you for shopping with ShopSphere. Your order has been placed successfully.</p>
+        <div class="conf-order-id-badge">Order ID: <strong id="confOrderId">ORD-892410</strong></div>
+      </div>
+
+      <!-- Live Order Status Tracker -->
+      <div class="order-tracker">
+        <div class="tracker-step active">
+          <div class="step-dot">✓</div>
+          <div class="step-label">Confirmed</div>
+        </div>
+        <div class="tracker-line active"></div>
+        <div class="tracker-step active">
+          <div class="step-dot">📦</div>
+          <div class="step-label">Processing</div>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step">
+          <div class="step-dot">🚚</div>
+          <div class="step-label">Dispatched</div>
+        </div>
+        <div class="tracker-line"></div>
+        <div class="tracker-step">
+          <div class="step-dot">🏠</div>
+          <div class="step-label">Delivery</div>
+        </div>
+      </div>
+
+      <!-- Order Details Breakdown -->
+      <div class="conf-details-grid">
+        <div class="conf-info-card">
+          <h4>📍 Delivery Address</h4>
+          <p id="confCustomerName" class="conf-recipient">Rahul Sharma</p>
+          <p id="confCustomerAddress">123 MG Road, Mumbai, 400001</p>
+          <p id="confCustomerPhone">📞 +91 9876543210</p>
+          <p id="confCustomerEmail">✉️ rahul@example.com</p>
+        </div>
+        <div class="conf-info-card">
+          <h4>💳 Payment & Delivery Info</h4>
+          <p><strong>Method:</strong> <span id="confPaymentMethod">UPI</span></p>
+          <p><strong>Payment Status:</strong> <span class="badge-paid" id="confPaymentStatus">Paid Online</span></p>
+          <p><strong>Estimated Delivery:</strong> <span id="confDeliveryDate">3-5 Days</span></p>
+          <p><strong>Invoice Date:</strong> <span id="confOrderDate">Today</span></p>
+        </div>
+      </div>
+
+      <!-- Itemized Ordered Products -->
+      <div class="conf-items-section">
+        <h4>Ordered Items</h4>
+        <div id="confItemsList" class="conf-items-table"></div>
+      </div>
+
+      <!-- Total Price Table -->
+      <div class="conf-totals-box">
+        <div class="conf-total-row">
+          <span>Subtotal:</span>
+          <span>₹<span id="confSubtotal">0</span></span>
+        </div>
+        <div class="conf-total-row" id="confDiscountRow">
+          <span>Discount:</span>
+          <span class="discount-value">-₹<span id="confDiscount">0</span></span>
+        </div>
+        <div class="conf-total-row">
+          <span>Shipping:</span>
+          <span id="confShipping">FREE</span>
+        </div>
+        <div class="conf-total-row conf-grand-total">
+          <strong>Grand Total Paid:</strong>
+          <strong>₹<span id="confTotal">0</span></strong>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="conf-actions">
+        <button id="printInvoiceBtn" class="btn btn-outline">
+          🖨️ Print Invoice Receipt
+        </button>
+        <button id="confContinueShoppingBtn" class="btn btn-primary">
+          🛍️ Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. Past Orders History Modal -->
+  <div id="orderHistoryModal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-card history-card" role="dialog" aria-modal="true">
+      <div class="history-header">
+        <h3>Your Order History</h3>
+        <button id="closeOrderHistory" class="icon-close-btn" aria-label="Close history">&times;</button>
+      </div>
+      <div id="orderHistoryList" class="history-list">
+        <!-- Injected via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <!-- 10. Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">🌐 ShopSphere</div>
+        <p>Your one-stop destination for tech, fashion, and lifestyle essentials. Built with modern, responsive Vanilla JavaScript.</p>
+      </div>
+      <div class="footer-links">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#hero">Home</a></li>
+          <li><a href="#products">All Products</a></li>
+          <li><a href="#about">Why Shop With Us</a></li>
+          <li><a href="#" id="footerCartLink">Open Shopping Cart</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Customer Care</h5>
+        <ul>
+          <li><a href="javascript:void(0)" onclick="alert('Helpdesk: support@shopsphere.com | Toll-free: 1800-123-4567')">Contact Support</a></li>
+          <li><a href="javascript:void(0)" onclick="alert('7-Day Hassle-Free Returns on all delivered products.')">Returns & Refunds</a></li>
+          <li><a href="javascript:void(0)" onclick="alert('Standard Delivery: 2-4 business days across India.')">Shipping Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 ShopSphere. Designed with modern aesthetics, smooth animations & complete checkout workflow.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
